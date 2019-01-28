@@ -118,6 +118,7 @@ public class BroadcastUtil {
             if(supported) {
                 int leMaximumAdvertisingDataLength = mBluetoothAdapter.getLeMaximumAdvertisingDataLength();
                 Log.e(TAG,leMaximumAdvertisingDataLength+"<<");
+                Toast.makeText(mActivity, "LE Extended Advertising is supported."+leMaximumAdvertisingDataLength, Toast.LENGTH_SHORT).show();
             }
             if (!mBluetoothAdapter.isLe2MPhySupported()) {
                 Log.e(TAG, "2M PHY not supported!");
