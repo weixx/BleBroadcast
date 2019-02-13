@@ -86,6 +86,10 @@ public class MonitorActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    public void ibBack(View view) {
+        finish();
+    }
+
     private int sum;
     private String sendMsg = "aabbccdd";
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,52 +7,61 @@
     android:orientation="vertical"
     android:background="#f4f4f4"
     tools:context=".ui.BroadcastActivity">
-
-    <TextView
-        android:id="@+id/txt_device"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:textColor="#353535"
-        android:text="监听未开启" />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/mRecycleListView"
-        android:layout_width="match_parent"
-        android:background="@drawable/bg_content"
+    <ImageButton
+        android:onClick="ibBack"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_weight="1"/>
+        android:src="@drawable/ic_arrow_back_black_24dp"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:orientation="horizontal">
-        <CheckBox
-            android:id="@+id/btn_start"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/txt_device"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="#353535"
+            android:text="监听未开启" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mRecycleListView"
+            android:layout_width="match_parent"
+            android:background="@drawable/bg_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1"/>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="开启监听"
-            android:button="@null"
-            android:background="@drawable/button"
-            android:gravity="center"
-            android:textColor="@drawable/button_text_color"
-            android:textSize="20sp"
-            android:padding="5dp"/>
-        <CheckBox
-            android:id="@+id/btn_stop"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="20dp"
-            android:text="关闭监听"
-            android:button="@null"
-            android:background="@drawable/button"
-            android:gravity="center"
-            android:textColor="@drawable/button_text_color"
-            android:textSize="20sp"
-            android:padding="5dp"/>
+            android:layout_margin="20dp"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/btn_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="开启监听"
+                android:button="@null"
+                android:background="@drawable/button"
+                android:gravity="center"
+                android:textColor="@drawable/button_text_color"
+                android:textSize="20sp"
+                android:padding="5dp"/>
+            <CheckBox
+                android:id="@+id/btn_stop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:text="关闭监听"
+                android:button="@null"
+                android:background="@drawable/button"
+                android:gravity="center"
+                android:textColor="@drawable/button_text_color"
+                android:textSize="20sp"
+                android:padding="5dp"/>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

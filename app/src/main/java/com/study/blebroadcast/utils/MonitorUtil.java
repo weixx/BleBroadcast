@@ -15,7 +15,7 @@ public class MonitorUtil {
         public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
             final ScanRecordUtil scanRecordUtil = ScanRecordUtil.parseFromBytes(scanRecord);
             String name = device.getName();
-            if(name != null && name.equals("WXX-BLE")) {
+            if(name != null && name.equals(Constant.DEVICE_NAME)) {
                 Log.e(TAG, "MonitorUtil onLeScan " + ScanRecordUtil.parseFromBytes(scanRecord).toString());
                 boolean b = scanRecordUtil.getServiceData().containsKey(ParcelUuid.fromString(Constant.UUID));
                 if(b) {

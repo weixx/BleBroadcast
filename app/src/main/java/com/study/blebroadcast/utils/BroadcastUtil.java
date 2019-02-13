@@ -111,7 +111,7 @@ public class BroadcastUtil {
             Toast.makeText(mActivity, "蓝牙不支持", Toast.LENGTH_LONG).show();
             return false;
         }
-        mBluetoothAdapter.setName("WXX-BLE"); //你想叫啥名字，你愿意就好
+        mBluetoothAdapter.setName(Constant.DEVICE_NAME);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             boolean supported = mBluetoothAdapter.isLeExtendedAdvertisingSupported();
             boolean le2MPhySupported = mBluetoothAdapter.isLe2MPhySupported();

@@ -94,6 +94,9 @@ public class BroadcastActivity extends Activity implements View.OnClickListener 
         }
     }
 
+    public void ibBack(View view) {
+        finish();
+    }
 
     @SuppressLint("SetTextI18n")
     @Override
