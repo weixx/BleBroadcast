@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.study.blebroadcast.ui.BroadcastActivity
 import com.study.blebroadcast.ui.MonitorActivity
-import com.study.blebroadcast.utils.BroadcastUtil
+import com.study.blebroadcast.utils.Broadcast5Util
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,13 +16,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun broadcast(view:View){
-        if (BroadcastUtil.getInstance(this).initBLE()) {
+        if (Broadcast5Util.getInstance(this).initBLE()) {
             startActivity(Intent(this@MainActivity, BroadcastActivity::class.java))
         }
     }
 
     fun monitor(view:View){
-        if (BroadcastUtil.getInstance(this).initBLE()){
+        if (Broadcast5Util.getInstance(this).initBLE()){
             startActivity(Intent(this@MainActivity,MonitorActivity::class.java))
         }
     }

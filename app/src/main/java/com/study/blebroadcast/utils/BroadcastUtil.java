@@ -62,41 +62,6 @@ public class BroadcastUtil {
     private BluetoothDevice bluetoothDevice;
 
 
-//    private AdvertisingSet currentAdvertisingSet;
-//    {
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//            AdvertisingSetParameters.Builder parameters = (new AdvertisingSetParameters.Builder())
-//                    .setLegacyMode(false)
-//                    .setInterval(AdvertisingSetParameters.INTERVAL_HIGH)
-//                    .setTxPowerLevel(AdvertisingSetParameters.TX_POWER_MEDIUM)
-//                    .setPrimaryPhy(BluetoothDevice.PHY_LE_2M)
-//                    .setSecondaryPhy(BluetoothDevice.PHY_LE_2M);
-//            AdvertisingSetCallback callback = new AdvertisingSetCallback() {
-//                @Override
-//                public void onAdvertisingSetStarted(AdvertisingSet advertisingSet, int txPower, int status) {
-//                    Log.i(TAG, "onAdvertisingSetStarted(): txPower:" + txPower + " , status: " + status);
-//                    currentAdvertisingSet = advertisingSet;
-//                }
-//
-//                @Override
-//                public void onAdvertisingSetStopped(AdvertisingSet advertisingSet) {
-//                    Log.i(TAG, "onAdvertisingSetStopped():");
-//                }
-//            };
-//
-//            AdvertiseData data = (new AdvertiseData.Builder()).addServiceData(new
-//                            ParcelUuid(UUID.randomUUID()),
-//                    "You should be able to fit large amounts of data up to maxDataLength.".getBytes()).build();
-//
-//            BluetoothLeAdvertiser advertiser =
-//                    BluetoothAdapter.getDefaultAdapter().getBluetoothLeAdvertiser();
-//
-//            advertiser.startAdvertisingSet(parameters.build(), data, null, null, null, callback);
-//
-//
-//        }
-//    }
-
     /**
      * 初始化蓝牙
      */
@@ -113,19 +78,16 @@ public class BroadcastUtil {
         }
         mBluetoothAdapter.setName(Constant.DEVICE_NAME);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            boolean supported = mBluetoothAdapter.isLeExtendedAdvertisingSupported();
-            boolean le2MPhySupported = mBluetoothAdapter.isLe2MPhySupported();
-            if(supported) {
+            if(mBluetoothAdapter.isLeExtendedAdvertisingSupported()) {
                 int leMaximumAdvertisingDataLength = mBluetoothAdapter.getLeMaximumAdvertisingDataLength();
                 Log.e(TAG,leMaximumAdvertisingDataLength+"<<");
                 Toast.makeText(mActivity, "LE Extended Advertising is supported."+leMaximumAdvertisingDataLength, Toast.LENGTH_SHORT).show();
-            }
-            if (!mBluetoothAdapter.isLe2MPhySupported()) {
-                Log.e(TAG, "2M PHY not supported!");
-            }
-            if (!mBluetoothAdapter.isLeExtendedAdvertisingSupported()) {
+            }else {
                 Toast.makeText(mActivity, "LE Extended Advertising is not supported on this device.", Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "LE Extended Advertising not supported!");
+            }
+
+            if (!mBluetoothAdapter.isLe2MPhySupported()) {
+                Toast.makeText(mActivity, "2M PHY not supported!", Toast.LENGTH_SHORT).show();
             }
         }
 

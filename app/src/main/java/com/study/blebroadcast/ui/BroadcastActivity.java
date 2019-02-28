@@ -10,14 +10,17 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.study.blebroadcast.R;
 import com.study.blebroadcast.adpater.MessageListAdapter;
 import com.study.blebroadcast.bean.MessageEntity;
-import com.study.blebroadcast.utils.BroadcastUtil;
+import com.study.blebroadcast.utils.Broadcast5Util;
 import com.study.blebroadcast.utils.MonitorUtil;
 
 import java.util.ArrayList;
@@ -38,20 +41,22 @@ public class BroadcastActivity extends Activity implements View.OnClickListener 
     private TextView txtDevice;
     private CheckBox btnStart;
     private CheckBox btnStop;
+    private TextView tvSendBroadcastContent;
+    private EditText etBroadcastContent;
     private RecyclerView mRecycleListView;
 
-    private boolean isSend;
+    private boolean isSend;//是否是手动输入发送的
     private boolean isScan;
 
-    private String sendMsg = "abcdefg";
+    private String sendMsg = "You should be able to fit large amounts of data up to maxDataLength. This goes" +
+            " up to 1650 bytes. For legacy advertising this would not work ";
     private MessageListAdapter listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_broadcast);
-        BroadcastUtil.getInstance(this).initBLE();
-        BroadcastUtil.getInstance(this).setServer();
+        Broadcast5Util.getInstance(this).initBLE();
         initView();
         initData();
         requestPermission();
@@ -77,8 +82,11 @@ public class BroadcastActivity extends Activity implements View.OnClickListener 
         txtDevice = findViewById(R.id.txt_device);
         btnStart = findViewById(R.id.btn_start);
         btnStop = findViewById(R.id.btn_stop);
+        tvSendBroadcastContent = findViewById(R.id.tvSendBroadcastContent);
+        etBroadcastContent = findViewById(R.id.etBroadcastContent);
         btnStart.setOnClickListener(this);
         btnStop.setOnClickListener(this);
+        tvSendBroadcastContent.setOnClickListener(this);
     }
 
     private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
@@ -104,11 +112,24 @@ public class BroadcastActivity extends Activity implements View.OnClickListener 
         if (v == btnStart) {
             startSend();
             btnStop.setChecked(false);
-            txtDevice.setText("当前广播次数："+sum);
+            isSend = false;
         } else if (v == btnStop) {
             stopSend();
             btnStart.setChecked(false);
             txtDevice.setText("广播未开启");
+        } else if (v == tvSendBroadcastContent) {
+            //发送自定义广播
+            String msg = etBroadcastContent.getText().toString().trim();
+            if(TextUtils.isEmpty(msg)) {
+                Toast.makeText(this, "请输入需要广播的内容", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            sendMsg = msg + " ";
+            stopSend();//先停止之前的广播
+            btnStop.setChecked(false);
+            btnStart.setChecked(false);
+            startSend();
+            isSend = true;
         }
     }
     private int sum;
@@ -130,7 +151,9 @@ public class BroadcastActivity extends Activity implements View.OnClickListener 
                     }
                     listAdapter.notifyDataSetChanged();
                     mRecycleListView.smoothScrollToPosition(listAdapter.getItemCount()-1);
-                    mHandler.sendEmptyMessageDelayed(0,1000);
+                    if(!isSend) {
+                        mHandler.sendEmptyMessageDelayed(0,1000);
+                    }
                 }
             }
         });
@@ -139,7 +162,7 @@ public class BroadcastActivity extends Activity implements View.OnClickListener 
 
     private void stopSend() {
         mHandler.removeMessages(0);
-        BroadcastUtil.getInstance(this).stop();
+        Broadcast5Util.getInstance(this).stop();
         MonitorUtil.stop();
     }
 
@@ -153,8 +176,8 @@ public class BroadcastActivity extends Activity implements View.OnClickListener 
     @SuppressLint("SetTextI18n")
     private void startSend() {
         String msg = sendMsg + (sum++);
-        BroadcastUtil.getInstance(BroadcastActivity.this).stop();
-        BroadcastUtil.getInstance(BroadcastActivity.this).start(msg);
+        Broadcast5Util.getInstance(this).stop();
+        Broadcast5Util.getInstance(this).start(msg);
         MonitorUtil.start();
         isScan = true;
 

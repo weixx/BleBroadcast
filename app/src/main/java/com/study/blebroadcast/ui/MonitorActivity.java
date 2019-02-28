@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.study.blebroadcast.R;
 import com.study.blebroadcast.adpater.MessageListAdapter;
 import com.study.blebroadcast.bean.MessageEntity;
-import com.study.blebroadcast.utils.BroadcastUtil;
+import com.study.blebroadcast.utils.Broadcast5Util;
 import com.study.blebroadcast.utils.MonitorUtil;
 
 import java.util.ArrayList;
@@ -91,7 +91,7 @@ public class MonitorActivity extends Activity implements View.OnClickListener {
     }
 
     private int sum;
-    private String sendMsg = "aabbccdd";
+    private String sendMsg = "Received broadcast! ";
 
     @Override
     protected void onResume() {
@@ -123,8 +123,8 @@ public class MonitorActivity extends Activity implements View.OnClickListener {
     };
     private void startSend() {
         String msg = sendMsg + (sum++);
-        BroadcastUtil.getInstance(MonitorActivity.this).stop();
-        BroadcastUtil.getInstance(MonitorActivity.this).start(msg);
+        Broadcast5Util.getInstance(MonitorActivity.this).stop();
+        Broadcast5Util.getInstance(MonitorActivity.this).start(msg);
         MonitorUtil.start();
         isScan = true;
 
@@ -160,13 +160,13 @@ public class MonitorActivity extends Activity implements View.OnClickListener {
     private void stop() {
         mHandler.removeMessages(0);
         MonitorUtil.stop();
-        BroadcastUtil.getInstance(MonitorActivity.this).stop();
+        Broadcast5Util.getInstance(MonitorActivity.this).stop();
     }
 
     @Override
     protected void onDestroy() {
         stop();
-        BroadcastUtil.getInstance(MonitorActivity.this).stop();
+        Broadcast5Util.getInstance(MonitorActivity.this).stop();
         super.onDestroy();
     }
 
