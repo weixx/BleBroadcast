@@ -96,8 +96,10 @@ public class Broadcast5Util {
                 .setLegacyMode(false)
                 .setInterval(AdvertisingSetParameters.INTERVAL_HIGH)
                 .setTxPowerLevel(AdvertisingSetParameters.TX_POWER_MEDIUM)
-                .setPrimaryPhy(BluetoothDevice.PHY_LE_CODED)
-                .setSecondaryPhy(BluetoothDevice.PHY_LE_2M);
+                .setPrimaryPhy(BluetoothDevice.PHY_LE_1M)
+                .setSecondaryPhy(BluetoothDevice.PHY_LE_2M)
+                .setScannable(true)
+                .setInterval(320);
 
         callback = new AdvertisingSetCallback() {
             @Override

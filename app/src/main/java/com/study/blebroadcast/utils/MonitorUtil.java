@@ -1,10 +1,13 @@
 package com.study.blebroadcast.utils;
 
 
+import android.annotation.TargetApi;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
+import android.bluetooth.le.ScanSettings;
+import android.os.Build;
 import android.os.ParcelUuid;
 import android.util.Log;
 
@@ -74,9 +77,11 @@ public class MonitorUtil {
     }
 
 
+    @TargetApi(Build.VERSION_CODES.O)
     public static void start(){
 //        BluetoothAdapter.getDefaultAdapter().startLeScan(leScanCallback);
-        BluetoothAdapter.getDefaultAdapter().getBluetoothLeScanner().startScan(scanCallback);
+        ScanSettings scanSettings = new ScanSettings.Builder().setLegacy(false).build();
+        BluetoothAdapter.getDefaultAdapter().getBluetoothLeScanner().startScan(null,scanSettings,scanCallback);
     }
     private static OnScanResult onScanResult;
 

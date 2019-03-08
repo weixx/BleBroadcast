@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BleBroadcast</string>
+    <string name="app_name">oaup</string>
     <string name="broadcast">广播模式</string>
     <string name="monitor">监听模式</string>
 </resources>
