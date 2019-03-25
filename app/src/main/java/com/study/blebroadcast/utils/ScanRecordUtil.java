@@ -78,7 +78,7 @@ public class ScanRecordUtil {
     private static final int DATA_TYPE_LOCAL_NAME_SHORT = 0x08;
     private static final int DATA_TYPE_LOCAL_NAME_COMPLETE = 0x09;
     private static final int DATA_TYPE_TX_POWER_LEVEL = 0x0A;
-    private static final int DATA_TYPE_SERVICE_DATA = 0x16;
+    private static final int DATA_TYPE_SERVICE_DATA = 0x21;
     private static final int DATA_TYPE_MANUFACTURER_SPECIFIC_DATA = 0xFF;
 
     // Flags of the advertising data.
@@ -264,8 +264,8 @@ public class ScanRecordUtil {
                                 serviceUuidLength);
                         ParcelUuid serviceDataUuid = parseUuidFrom(
                                 serviceDataUuidBytes);
-//                        byte[] serviceDataArray = extractBytes(scanRecord, currentPos + serviceUuidLength, dataLength - serviceUuidLength);
-                        byte[] serviceDataArray = extractBytes(scanRecord, currentPos + 2, dataLength - 2);
+                        byte[] serviceDataArray = extractBytes(scanRecord, currentPos + serviceUuidLength, dataLength - serviceUuidLength);
+//                        byte[] serviceDataArray = extractBytes(scanRecord, currentPos + 2, dataLength - 2);
                         serviceData.put(serviceDataUuid, serviceDataArray);
                         break;
                     case DATA_TYPE_MANUFACTURER_SPECIFIC_DATA:

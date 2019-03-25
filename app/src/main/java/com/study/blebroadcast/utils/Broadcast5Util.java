@@ -69,15 +69,15 @@ public class Broadcast5Util {
                 return false;
             }
 
-            if (!mBluetoothAdapter.isLe2MPhySupported()) {
-                Toast.makeText(mActivity, "2M PHY not supported!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
+            //  if (!mBluetoothAdapter.isLe2MPhySupported()) {
+            //     Toast.makeText(mActivity, "2M PHY not supported!", Toast.LENGTH_SHORT).show();
+            //      return false;
+            //  }
 
-            if (!mBluetoothAdapter.isLeCodedPhySupported()) {
-                Toast.makeText(mActivity, "LE Coded PHY feature is not supported!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
+            // if (!mBluetoothAdapter.isLeCodedPhySupported()) {
+            //      Toast.makeText(mActivity, "LE Coded PHY feature is not supported!", Toast.LENGTH_SHORT).show();
+            //     return false;
+            //}
         }else {
             Toast.makeText(mActivity, "android os not supported!", Toast.LENGTH_SHORT).show();
             return false;
@@ -94,11 +94,11 @@ public class Broadcast5Util {
 
         parameters = (new AdvertisingSetParameters.Builder())
                 .setLegacyMode(false)
-                .setInterval(AdvertisingSetParameters.INTERVAL_HIGH)
-                .setTxPowerLevel(AdvertisingSetParameters.TX_POWER_MEDIUM)
+                // .setInterval(AdvertisingSetParameters.INTERVAL_HIGH)
+                // .setTxPowerLevel(AdvertisingSetParameters.TX_POWER_MEDIUM)
                 .setPrimaryPhy(BluetoothDevice.PHY_LE_1M)
-                .setSecondaryPhy(BluetoothDevice.PHY_LE_2M)
-                .setScannable(true)
+                .setSecondaryPhy(BluetoothDevice.PHY_LE_1M)
+                // .setScannable(true)
                 .setInterval(320);
 
         callback = new AdvertisingSetCallback() {
@@ -120,10 +120,15 @@ public class Broadcast5Util {
     public void start(String msg) {
         this.msg = msg;
         //构造广播数据
-        AdvertiseData data = new AdvertiseData.Builder().addServiceData(ParcelUuid.fromString(Constant.UUID),
-                msg.getBytes()).build();
+        AdvertiseData data = new AdvertiseData.Builder()
+                .addServiceUuid(ParcelUuid.fromString(Constant.UUID))
+                .addServiceData(ParcelUuid.fromString(Constant.UUID), msg.getBytes())
+                .setIncludeTxPowerLevel(true)
+                .setIncludeDeviceName(true)
+                .build();
+
         //开始广播
-        advertiser.startAdvertisingSet(parameters.build(), data, null, null, null, callback);
+        advertiser.startAdvertisingSet(parameters.build(), data, null, null, null, 500, 255, callback);
     }
 
     public void stop() {
